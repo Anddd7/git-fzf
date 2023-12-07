@@ -1,9 +1,12 @@
 #!/bin/sh
 
-mkdir -p ~/.git-fzf
+remote_url="https://raw.githubusercontent.com/Anddd7/git-fzf/main"
+local_folder="$HOME/.git-fzf"
 
-curl -sSL "https://raw.githubusercontent.com/Anddd7/git-fzf/main/git-fzf-commit" >~/.git-fzf/git-fzf-commit.sh
+mkdir -p "$local_folder"
 
-echo 'PATH="$HOME/git-fzf:$PATH"' >>~/.zshrc
+curl -sSL "$remote_url/git-fzf-commit" -o "$local_folder/git-fzf-commit"
+
+echo 'PATH="$HOME/.git-fzf:$PATH"' >>~/.zshrc
 
 echo 'alias gfzfc="git fzf-commit"' >>~/.zshrc
