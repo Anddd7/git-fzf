@@ -26,7 +26,8 @@ selected_prefix=$(printf "%s\n" "${prefixes[@]}" | fzf)
 
 # 如果用户没有选择前缀，退出脚本
 if [ -z "$selected_prefix" ]; then
-  selected_prefix="chore"
+  echo "No prefix selected. Aborting."
+  exit 1
 fi
 
 final_commit_message="$selected_prefix: $commit_message"
