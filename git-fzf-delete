@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# list and filter branches
+current_branch=$(git branch --show-current)
+branches=$(git branch --format="%(refname:short)" -a | grep -v -E "master|main|HEAD|$current_branch" | fzf --multi)
+
+# exit if user didn't select any branch
+[[ -z "$branches" ]] && exit 1
+
+echo "Selected branches:"
+echo "$branches"
+
+# double confirm
+read -r -p "Are you confirm to delete those branches? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  echo "Deleting..."
+else
+  echo "Canceled."
+  exit 1
+fi
+
+for branch in $branches; do
+  if [[ "$branch" == "origin/"* ]]; then
+    # delete remote branch
+    git push origin --delete "$branch" 2>/dev/null
+    echo "Deleted remote branch: $branch"
+    continue
+  else
+    # delete local branch
+    git branch -D "$branch" 2>/dev/null
+  fi
+done

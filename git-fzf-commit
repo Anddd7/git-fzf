@@ -24,11 +24,8 @@ fi
 # select via fzf
 selected_prefix=$(printf "%s\n" "${prefixes[@]}" | fzf)
 
-# 如果用户没有选择前缀，退出脚本
-if [ -z "$selected_prefix" ]; then
-  echo "No prefix selected. Aborting."
-  exit 1
-fi
+# exit if user didn't select any prefix
+[[ -z "$selected_prefix" ]] && exit 1
 
 final_commit_message="$selected_prefix: $commit_message"
 

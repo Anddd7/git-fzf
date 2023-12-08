@@ -6,6 +6,7 @@ local_folder="$HOME/bin/git-fzf"
 mkdir -p "$local_folder"
 
 curl -sSL "$remote_url/git-fzf-commit" -o "$local_folder/git-fzf-commit"
+curl -sSL "$remote_url/git-fzf-delete" -o "$local_folder/git-fzf-delete"
 
 # inject to zshrc
 if grep -q 'export PATH="$HOME/bin/git-fzf:$PATH"' ~/.zshrc; then
@@ -13,4 +14,5 @@ if grep -q 'export PATH="$HOME/bin/git-fzf:$PATH"' ~/.zshrc; then
 else
   echo 'export PATH="$HOME/bin/git-fzf:$PATH"' >>~/.zshrc
   echo 'alias gfzfc="git fzf-commit"' >>~/.zshrc
+  echo 'alias gfzfd="git fzf-delete"' >>~/.zshrc
 fi
