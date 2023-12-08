@@ -14,7 +14,7 @@ done
 
 # load prefixes from config file
 if [ -f "$current_dir/$config_file" ]; then
-  prefixes=($(<"$current_dir/$config_file"))
+  mapfile -t prefixes <"$current_dir/$config_file"
 else
   echo "Config file not found. Using default prefixes."
 
