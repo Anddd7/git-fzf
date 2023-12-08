@@ -7,6 +7,10 @@ mkdir -p "$local_folder"
 
 curl -sSL "$remote_url/git-fzf-commit" -o "$local_folder/git-fzf-commit"
 
-echo 'export PATH="$HOME/bin/git-fzf:$PATH"' >>~/.zshrc
-
-echo 'alias gfzfc="git fzf-commit"' >>~/.zshrc
+# inject to zshrc
+if grep -q 'export PATH="$HOME/bin/git-fzf:$PATH"' ~/.zshrc; then
+  echo "Upgrade git-fzf successfully"
+else
+  echo 'export PATH="$HOME/bin/git-fzf:$PATH"' >>~/.zshrc
+  echo 'alias gfzfc="git fzf-commit"' >>~/.zshrc
+fi
