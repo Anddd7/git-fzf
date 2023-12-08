@@ -8,6 +8,9 @@ mkdir -p "$local_folder"
 curl -sSL "$remote_url/git-fzf-commit" -o "$local_folder/git-fzf-commit"
 curl -sSL "$remote_url/git-fzf-delete" -o "$local_folder/git-fzf-delete"
 
+chmod +x "$local_folder/git-fzf-commit"
+chmod +x "$local_folder/git-fzf-delete"
+
 # inject to zshrc
 if grep -q 'export PATH="$HOME/bin/git-fzf:$PATH"' ~/.zshrc; then
   echo "Upgrade git-fzf successfully"
