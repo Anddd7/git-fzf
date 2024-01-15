@@ -1,21 +1,34 @@
-#!/bin/sh
+#!/bin/bash
 
 remote_url="https://raw.githubusercontent.com/Anddd7/git-fzf/main"
 local_folder="$HOME/bin/git-fzf"
 
+commands=(
+  fzf-commit
+  fzf-delete
+  fzf-time
+)
+shortcuts=(
+  gfzfc
+  gfzfd
+  gfzft
+)
+
 mkdir -p "$local_folder"
 
-curl -sSL "$remote_url/git-fzf-commit" -o "$local_folder/git-fzf-commit"
-curl -sSL "$remote_url/git-fzf-delete" -o "$local_folder/git-fzf-delete"
+# download commands
+for command in "${commands[@]}"; do
+  curl -sSL "$remote_url/git-$command" -o "$local_folder/git-$command"
+  chmod +x "$local_folder/git-$command"
+done
 
-chmod +x "$local_folder/git-fzf-commit"
-chmod +x "$local_folder/git-fzf-delete"
-
-# inject to zshrc
-if grep -q 'export PATH="$HOME/bin/git-fzf:$PATH"' ~/.zshrc; then
+# update .zshrc
+if grep -q "export PATH=\"$HOME/bin/git-fzf:\$PATH\"" ~/.zshrc; then
   echo "Upgrade git-fzf successfully"
 else
-  echo 'export PATH="$HOME/bin/git-fzf:$PATH"' >>~/.zshrc
-  echo 'alias gfzfc="git fzf-commit"' >>~/.zshrc
-  echo 'alias gfzfd="git fzf-delete"' >>~/.zshrc
+  echo "export PATH=\"$HOME/bin/git-fzf:\$PATH\"" >>~/.zshrc
+  # "alias $shortcut=\"git fzf-$command\""
+  for shortcut in "${shortcuts[@]}"; do
+    echo "alias $shortcut=\"git fzf-${commands[$i]}\"" >>~/.zshrc
+  done
 fi

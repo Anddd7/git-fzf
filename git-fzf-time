@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# list the time options
+time_options=("1h" "3h" "12h" "24h")
+
+# let the user select a time option
+selected_time=$(echo "${time_options[@]}" | tr ' ' '\n' | fzf)
+
+# exit if user didn't select any time option
+[[ -z "$selected_time" ]] && exit 1
+
+# convert the selected time to a format that the date command can understand
+if [[ "$selected_time" == "1h" ]]; then
+  selected_time="1 hour"
+elif [[ "$selected_time" == "3h" ]]; then
+  selected_time="3 hours"
+elif [[ "$selected_time" == "12h" ]]; then
+  selected_time="12 hours"
+elif [[ "$selected_time" == "24h" ]]; then
+  selected_time="24 hours"
+fi
+
+# change the commit time
+GIT_COMMITTER_DATE="$(date -u --date="$selected_time ago")"
+
+git commit --amend --no-edit --date "$GIT_COMMITTER_DATE"
