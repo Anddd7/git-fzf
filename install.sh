@@ -23,12 +23,12 @@ for command in "${commands[@]}"; do
 done
 
 # update .zshrc
-if grep -q "export PATH=\"$HOME/bin/git-fzf:\$PATH\"" ~/.zshrc; then
-  echo "Upgrade git-fzf successfully"
-else
-  echo "export PATH=\"$HOME/bin/git-fzf:\$PATH\"" >>~/.zshrc
-  # "alias $shortcut=\"git fzf-$command\""
-  for shortcut in "${shortcuts[@]}"; do
-    echo "alias $shortcut=\"git fzf-${commands[$i]}\"" >>~/.zshrc
-  done
+if ! grep -q 'export PATH="$HOME/bin/git-fzf:$PATH"' ~/.zshrc; then
+  echo 'export PATH="$HOME/bin/git-fzf:$PATH"' >>~/.zshrc
 fi
+
+for shortcut in "${shortcuts[@]}"; do
+  if ! grep -q "alias $shortcut=\"git ${commands[$i]}\"" ~/.zshrc; then
+    echo "alias $shortcut=\"git ${commands[$i]}\"" >>~/.zshrc
+  fi
+done
