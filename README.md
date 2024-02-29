@@ -12,7 +12,7 @@ standardized your commit message with fzf.
 apply the shell
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/Anddd7/git-fzf/main/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/Anddd7/git-fzf/main/install.sh)"
 ```
 
 ## Usage
